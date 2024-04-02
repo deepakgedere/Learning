@@ -38,7 +38,7 @@
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
                         <input asp-for="Input.StreetAddress" class="form-control" autocomplete="username" aria-required="true" placeholder="Name Surname" />
-                        <label asp-for="Input.StreetAddress">Street Adress</label>
+                        <label asp-for="Input.StreetAddress">Street Address</label>
                         <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
                     </div>
                 </div>
@@ -60,14 +60,14 @@
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
                         <input asp-for="Input.State" class="form-control" autocomplete="username" aria-required="true" placeholder="Name Surname" />
-                        <label asp-for="Input.State">Street State</label>
+                        <label asp-for="Input.State">State</label>
                         <span asp-validation-for="Input.State" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
                         <input asp-for="Input.PostalCode" class="form-control" autocomplete="username" aria-required="true" placeholder="Name Surname" />
-                        <label asp-for="Input.PostalCode">Street Adress</label>
+                        <label asp-for="Input.PostalCode">Postal Code</label>
                         <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select">
+                        <select asp-for="Input.CompanyId" style="display:none" asp-items="@Model.Input.CompanyList" class="form-select">
                             <option disabled selected>-Select Company-</option>
                         </select>
                     </div>
