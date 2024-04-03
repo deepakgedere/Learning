@@ -11,6 +11,7 @@ namespace Learning.Models
 {
     public class ShoppingCart
     {
+        [Key]
         public int Id { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
