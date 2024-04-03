@@ -27,17 +27,9 @@ namespace Learning.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
-            IQueryable<T> query;
-            if (tracked)
-            {
-                query = dbSet;
-            }
-            else
-            {
-                query = dbSet.AsNoTracking();
-            }
+            IQueryable<T> query = dbSet;
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(includeProperties))
             {
@@ -46,9 +38,8 @@ namespace Learning.DataAccess.Repository
                 {
                     query = query.Include(includeProp);
                 }
-            }
+            }   
             return query.FirstOrDefault();
-
         }
 
         public IEnumerable<T> GetAll(string? includeProperties = null)
