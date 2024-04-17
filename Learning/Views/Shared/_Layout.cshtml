@@ -27,10 +27,10 @@
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Orders</a>
                         </li>
-                       @* @if (User.IsInRole(SD.Role_Admin))
-                        { *@
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                        {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Content Management
@@ -49,10 +49,10 @@
                                     </li>
                                 </ul>
                             </li>   
-                        @* } *@
+                        }
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
-                                <i class="bi bi-cart"></i> &nbsp; (0)
+                                <i class="bi bi-cart"></i>
                             </a>
                         </li>
                     </ul>
@@ -62,7 +62,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
