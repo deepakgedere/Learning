@@ -59,7 +59,7 @@ namespace LearningWeb.Areas.Customer.Controllers
             }
 
             _unitOfWork.Save();
-
+            TempData["Success"] = "Cart updated successfully.";
             return RedirectToAction("Index");
         }
         public IActionResult Privacy()

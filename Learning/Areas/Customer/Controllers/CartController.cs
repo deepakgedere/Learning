@@ -145,8 +145,9 @@ namespace LearningWeb.Areas.Customer.Controllers
 				//It is a company user
 				ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
 				ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
-			}
-			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
+                ShoppingCartVM.OrderHeader.PaymentDueDate = DateOnly.FromDateTime(DateTime.Today).AddDays(30);
+            }
+            _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 			_unitOfWork.Save();
 			foreach (var cart in ShoppingCartVM.ShoppingCartList)
 			{
