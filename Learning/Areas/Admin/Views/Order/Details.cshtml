@@ -130,7 +130,8 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="@Model.OrderHeader.Carrier" type=" text" class="form-control" />
+                                        <input asp-for="@Model.OrderHeader.Carrier" id="carrier" type=" text" class="form-control" />
+                                        <span asp-validation-for="OrderHeader.Carrier" class="text-danger"></span>
                                     }
                                     else
                                     {
@@ -143,7 +144,8 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="@Model.OrderHeader.TrackingNumber" type=" text" class="form-control" />
+                                        <input asp-for="@Model.OrderHeader.TrackingNumber" id="trackingNumber" type=" text" class="form-control" />
+                                        <span asp-validation-for="OrderHeader.TrackingNumber" class="text-danger"></span>
                                     }
                                     else
                                     {
@@ -239,26 +241,26 @@
                             @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
                             Model.OrderHeader.OrderStatus == SD.StatusShipped)
                             {
-                                <input type="submit" class="btn btn-success form-control my-1" value="Pay Now" />
+                                <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
                             }
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
                                 {
-                                    <input type="submit" class="btn btn-primary form-control my-1" value="Start Processing" />
+                                    <input type="submit" asp-action="StartProcessing" class="btn btn-primary form-control my-1" value="Start Processing" />
                                 }
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
                                 {
-                                    <input type="submit" class="btn btn-primary form-control my-1" value="Ship Order" />
+                                    <button type="submit" asp-action="ShipOrder" onclick="return validateInput()" class="btn btn-primary form-control my-1">
+                                        Ship Order</button>
+                                }
+                                @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
+                                              Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
+                                              Model.OrderHeader.OrderStatus != SD.StatusShipped)
+                                {
+                                    <input type="submit" asp-action="CancelOrder" class="btn btn-danger form-control my-1" value="Cancel Order" />
                                 }
                             }
-                            @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
-                            Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
-                            Model.OrderHeader.OrderStatus != SD.StatusShipped)
-                            {
-                                <input type="submit" class="btn btn-danger form-control my-1" value="Cancel Order" />
-                            }
-
                         </div>
                     </div>
                 </div>
@@ -267,3 +269,29 @@
     </div>
 </form>
 <partial name="_Notification" />
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function validateInput(){
+            if (document.getElementById("carrier").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'oops',
+                    text: 'Please enter Carrier',
+                });
+                return (false)
+            }
+            if(document.getElementById("trackingNumber").value==""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'oops',
+                    text: 'Please enter Tracking Number',
+                });
+                return(false)
+            }
+            return true;
+        }
+    </script>
+}
+                           
