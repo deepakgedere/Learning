@@ -71,17 +71,23 @@ namespace LearningWeb.Areas.Customer.Controllers
 		{
 			var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
 			if (cartFromDb.Count <= 1)
-				return RedirectToAction(nameof(Remove), new { cartId });
+			{
+                HttpContext.Session.SetInt32(SD.SessionCart,
+           _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+                return RedirectToAction(nameof(Remove), new { cartId });
+			}
 			cartFromDb.Count -= 1;
 			_unitOfWork.ShoppingCart.Update(cartFromDb);
-			_unitOfWork.Save();
+            _unitOfWork.Save();
 			return RedirectToAction(nameof(Index));
 		}
 		public IActionResult Remove(int cartId)
 		{
 			var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
 			_unitOfWork.ShoppingCart.Remove(cartFromDb);
-			_unitOfWork.Save();
+            HttpContext.Session.SetInt32(SD.SessionCart,
+            _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count()-1);
+            _unitOfWork.Save();
 			return RedirectToAction(nameof(Index));
 		}
 		public IActionResult Summary()
